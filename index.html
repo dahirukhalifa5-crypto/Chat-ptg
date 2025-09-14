@@ -152,16 +152,37 @@
 
     // Pre-defined FAQ data
     const faqData = {
+        // Orders & Shipping
         'track order': "Once your order has shipped, we'll send a confirmation email with a tracking number. You can use that to check your delivery status.",
         'shipping time': "Shipping times vary depending on your location and the selected method. Standard shipping is usually 5-7 business days.",
         'international shipping': "Yes, we ship to most countries! Please note that international orders may have customs fees or import duties you'll be responsible for.",
+        'lost or damaged': "If your package is lost or damaged, please contact our support team immediately with your order number. We'll work to resolve the issue as quickly as possible.",
+        'change my shipping address': "Unfortunately, we cannot change the shipping address once an order has been placed. Please double-check your address before completing your purchase.",
+        
+        // Returns & Refunds
         'return policy': "We accept returns of unused items within 30 days of purchase. The item must be in its original packaging with all tags attached.",
-        'initiate return': "To start a return, please visit our online Return Center and enter your order number.",
+        'initiate a return': "To start a return, please visit our online Return Center and enter your order number.",
         'refund process': "After we receive your returned item, please allow 5-7 business days to process your refund. It will be credited to your original payment method.",
-        'contact support': "You can reach our customer support team by filling out the contact form on our website or by emailing us at support@yourbusiness.com.",
+        'return a sale item': "Items purchased on sale or clearance are generally final sale and cannot be returned, but please check the product description for specific details.",
+        'defective product': "If you received a defective product, please contact us right away. We will arrange for a replacement or a full refund, and we'll cover the return shipping costs.",
+
+        // Products & Services
+        'what size': "Please refer to our detailed size chart on each product page to find the perfect fit. If you're still unsure, feel free to contact us!",
+        'gift cards': "Yes, we offer both physical and digital gift cards in a variety of denominations. They can be purchased directly on our website.",
+        'out of stock': "If an item is out of stock, you can sign up on the product page to be notified via email as soon as it's available again.",
+        'eco-friendly': "Many of our products are made with sustainable and eco-friendly materials. Look for the 'Eco-Friendly' badge on the product page for more information.",
+        'customize an order': "We do offer customization on select products. Please check the product description or contact our team to discuss your specific needs.",
+
+        // Payments & Security
         'payment methods': "We accept all major credit cards, as well as PayPal, Apple Pay, and Google Pay.",
         'is my payment secure': "Yes, your payment information is completely secure. All transactions are handled through a secure payment gateway, and we do not store your card details.",
-        'out of stock': "If an item is out of stock, you can sign up on the product page to be notified via email as soon as it's available again."
+        'payment declined': "A declined payment can be due to several reasons. Please check your card details, billing address, or contact your bank to ensure there are no issues.",
+
+        // General Information
+        'contact support': "You can reach our customer support team by filling out the contact form on our website or by emailing us at support@yourbusiness.com.",
+        'physical store': "We currently operate as an online-only business and do not have any physical store locations.",
+        'newsletter': "You can subscribe to our newsletter by entering your email address at the bottom of our homepage. You'll get updates on new products and exclusive promotions!",
+        'loyalty program': "We are in the process of developing a loyalty program to reward our returning customers. Please subscribe to our newsletter for future updates."
     };
 
     // Function to display a message in the chat window
@@ -213,7 +234,7 @@
 
     // Initial message from the bot
     window.addEventListener('load', () => {
-        displayMessage("Hello! I am A.K. Dahiru. How can I help you today? You can ask me questions about our products, shipping, and returns.", 'bot');
+        displayMessage("Hello! I am A.K. Dahiru. I can answer questions about our products, shipping, and returns. How can I help you today?", 'bot');
     });
 </script>
 
