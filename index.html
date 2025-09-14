@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.K. Dahiru</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 500px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            background-color: #1a202c;
+            color: white;
+            padding: 1rem;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        #chat-messages {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+        }
+
+        .bot-message {
+            background-color: #e2e8f0;
+            color: #4a5568;
+            align-self: flex-start;
+        }
+
+        .user-message {
+            background-color: #4a90e2;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #e2e8f0;
+            gap: 0.5rem;
+        }
+
+        #user-input {
+            flex-grow: 1;
+            padding: 0.75rem 1.25rem;
+            border-radius: 2rem;
+            border: 1px solid #cbd5e0;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        #user-input:focus {
+            border-color: #4a90e2;
+        }
+
+        #send-btn {
+            background-color: #4a90e2;
+            color: white;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        #send-btn:hover {
+            background-color: #3182ce;
+        }
+
+        #send-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Scrollbar styling */
+        #chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #chat-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        #chat-messages::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 10px;
+        }
+
+        #chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">A.K. Dahiru</div>
+    <div id="chat-messages"></div>
+    <div class="input-area">
+        <input type="text" id="user-input" placeholder="Ask a question..." />
+        <button id="send-btn">
+            <!-- Send icon using SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+        </button>
+    </div>
+</div>
+
+<script>
+    // Get HTML elements
+    const chatMessages = document.getElementById('chat-messages');
+    const userInput = document.getElementById('user-input');
+    const sendButton = document.getElementById('send-btn');
+
+    // Pre-defined FAQ data
+    const faqData = {
+        'track order': "Once your order has shipped, we'll send a confirmation email with a tracking number. You can use that to check your delivery status.",
+        'shipping time': "Shipping times vary depending on your location and the selected method. Standard shipping is usually 5-7 business days.",
+        'international shipping': "Yes, we ship to most countries! Please note that international orders may have customs fees or import duties you'll be responsible for.",
+        'return policy': "We accept returns of unused items within 30 days of purchase. The item must be in its original packaging with all tags attached.",
+        'initiate return': "To start a return, please visit our online Return Center and enter your order number.",
+        'refund process': "After we receive your returned item, please allow 5-7 business days to process your refund. It will be credited to your original payment method.",
+        'contact support': "You can reach our customer support team by filling out the contact form on our website or by emailing us at support@yourbusiness.com.",
+        'payment methods': "We accept all major credit cards, as well as PayPal, Apple Pay, and Google Pay.",
+        'is my payment secure': "Yes, your payment information is completely secure. All transactions are handled through a secure payment gateway, and we do not store your card details.",
+        'out of stock': "If an item is out of stock, you can sign up on the product page to be notified via email as soon as it's available again."
+    };
+
+    // Function to display a message in the chat window
+    function displayMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message');
+        messageDiv.textContent = text;
+        if (sender === 'user') {
+            messageDiv.classList.add('user-message');
+        } else {
+            messageDiv.classList.add('bot-message');
+        }
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to the bottom
+    }
+
+    // Function to handle user input
+    function handleInput() {
+        const userMessage = userInput.value.trim();
+        if (userMessage === '') return;
+
+        displayMessage(userMessage, 'user');
+        
+        let botResponse = "I'm sorry, I don't have an answer for that. Please try rephrasing your question or contact our support team.";
+        const normalizedMessage = userMessage.toLowerCase();
+
+        // Check for keywords in the user's message
+        for (const keyword in faqData) {
+            if (normalizedMessage.includes(keyword)) {
+                botResponse = faqData[keyword];
+                break;
+            }
+        }
+        
+        setTimeout(() => {
+            displayMessage(botResponse, 'bot');
+        }, 500); // Add a small delay for a more natural feel
+
+        userInput.value = ''; // Clear the input field
+    }
+
+    // Event listeners
+    sendButton.addEventListener('click', handleInput);
+    userInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            handleInput();
+        }
+    });
+
+    // Initial message from the bot
+    window.addEventListener('load', () => {
+        displayMessage("Hello! I am A.K. Dahiru. How can I help you today? You can ask me questions about our products, shipping, and returns.", 'bot');
+    });
+</script>
+
+</body>
+</html>
